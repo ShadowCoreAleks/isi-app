@@ -1,0 +1,16 @@
+:host {
+  border: unset;
+  border-radius: var(--border-radius);
+  box-shadow: 0 5px 8px var(--button-shadow);
+  background-color: var(--button);
+  font: normal normal normal 14px/17px Helvetica;
+  color: white;
+  height: 46px;
+  width: 120px;
+  cursor: pointer;
+  transition-duration: 500ms;
+
+  &:hover {
+    background-color: #207CD7FF;
+  }
+}

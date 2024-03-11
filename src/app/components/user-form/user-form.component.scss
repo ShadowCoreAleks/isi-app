@@ -2,7 +2,6 @@
 
 :host {
   @include mixins.default-component();
-  display: block;
   padding: 26px;
 }
 
@@ -50,5 +49,9 @@
       font-weight: 300;
       color: var(--text-primary);
     }
+  }
+
+  &__create {
+    justify-self: center;
   }
 }

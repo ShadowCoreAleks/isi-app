@@ -3,4 +3,6 @@
   box-shadow: 0 0 30px var(--shadow);
   border: 1px solid var(--border);
   border-radius: var(--border-radius);
+  display: block;
+  box-sizing: border-box;
 }
