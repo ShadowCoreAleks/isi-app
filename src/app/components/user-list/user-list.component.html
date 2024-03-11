@@ -1,1 +1,19 @@
-<p>user-list works!</p>
+<table>
+  <tr>
+    @for (column of columns; track column) {
+      <th>{{ column | uppercase }}</th>
+    }
+  </tr>
+
+  @for (user of users$ | async; track user.username) {
+    <tr>
+      <td>{{ user.username }}</td>
+      <td>{{ user.first_name }}</td>
+      <td>{{ user.last_name }}</td>
+      <td>{{ user.email }}</td>
+      <td>{{ user.user_type }}</td>
+    </tr>
+  } @empty {
+    <div class="empty-table">There are no any users yet</div>
+  }
+</table>

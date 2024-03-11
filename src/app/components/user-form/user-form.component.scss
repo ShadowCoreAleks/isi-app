@@ -1,0 +1,6 @@
+@use "src/styles/mixins";
+
+:host {
+  @include mixins.default-component();
+  display: block;
+}

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { BackendApiService } from '../../services/backend-api.service';
 
 @Component({
   selector: 'app-user-list',
@@ -6,9 +7,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./user-list.component.scss']
 })
 export class UserListComponent implements OnInit {
+  #backendApiService = inject(BackendApiService);
 
-  constructor() { }
+  users$ = this.#backendApiService.loadUsers();
 
+  columns: string[] = [
+    'Username',
+    'First name',
+    'Last name',
+    'Email',
+    'Type'
+  ];
   ngOnInit(): void {
   }
 

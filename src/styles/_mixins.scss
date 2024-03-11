@@ -1,0 +1,6 @@
+@mixin default-component {
+  background: var(--white) 0% 0% no-repeat padding-box;
+  box-shadow: 0 0 30px var(--shadow);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}

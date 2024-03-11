@@ -1,0 +1,18 @@
+/* You can add global styles to this file, and also import other style files */
+@use "variables";
+@use "common";
+
+body {
+  background-color: var(--background);
+  display: block;
+  height: 100vh;
+  font: var(--default-font);
+}
+
+h3 {
+  font: var(--default-font);
+  color: var(--text-primary);
+  font-size: 16px;
+  line-height: 19px;
+  font-weight: bold;
+}
