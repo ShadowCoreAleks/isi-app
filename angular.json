@@ -69,10 +69,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "isi-test:build:production"
+              "buildTarget": "isi-test:build:production"
             },
             "development": {
-              "browserTarget": "isi-test:build:development"
+              "buildTarget": "isi-test:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -80,7 +80,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "isi-test:build"
+            "buildTarget": "isi-test:build"
           }
         },
         "test": {
