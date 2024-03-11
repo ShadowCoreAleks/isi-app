@@ -1,1 +1,45 @@
-<h3>Create new user</h3>
+<section class="top-row">
+  <h3>Create new user</h3>
+
+  <button class="top-row__close">✕</button>
+</section>
+
+<form class="user-form">
+  <div class="user-form__control">
+    <label for="username">Username*</label>
+    <input id="username" type="text" required>
+  </div>
+
+  <div class="user-form__control">
+    <label for="first-name">First name*</label>
+    <input id="first-name" type="text" required>
+  </div>
+
+  <div class="user-form__control">
+    <label for="last-name">Last name*</label>
+    <input id="last-name" type="text" required>
+  </div>
+
+  <div class="user-form__control">
+    <label for="email">Email*</label>
+    <input id="email" type="email" required>
+  </div>
+
+  <div class="user-form__control">
+    <label for="type">Type*</label>
+    <select id="type" required>
+      <option [value]="userTypeEnum.Admin">{{ userTypeEnum.Admin }}</option>
+      <option [value]="userTypeEnum.Driver">{{ userTypeEnum.Driver }}</option>
+    </select>
+  </div>
+
+  <div class="user-form__control">
+    <label for="password">Password*</label>
+    <input id="password" type="password" required>
+  </div>
+
+  <div class="user-form__control">
+    <label for="repeat-password">Repeat password*</label>
+    <input id="repeat-password" type="password" required>
+  </div>
+</form>

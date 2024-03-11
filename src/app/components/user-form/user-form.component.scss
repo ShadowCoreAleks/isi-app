@@ -3,4 +3,52 @@
 :host {
   @include mixins.default-component();
   display: block;
+  padding: 26px;
+}
+
+.top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &__close {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--table-header);
+    font-size: large;
+    border: unset;
+    background-color: unset;
+    cursor: pointer;
+  }
+}
+
+.user-form {
+  display: grid;
+  grid-row-gap: 16px;
+  margin-block-start: 29px;
+
+  &__control {
+    label {
+      color: var(--text-primary);
+    }
+    label + select,
+    label + input {
+      margin-block-start: 3px;
+    }
+    select,
+    input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 17px 16px 16px 16px;
+      background-color: var(--form-control);
+      border: unset;
+      border-radius: var(--border-radius);
+      font: var(--default-font);
+      font-weight: 300;
+      color: var(--text-primary);
+    }
+  }
 }
