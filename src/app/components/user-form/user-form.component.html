@@ -1,9 +1,17 @@
 <section class="top-row">
+<!--  /** first variant */-->
   @if ($pageMode() === pageModeEnum.update && $user()) {
     <h3>{{ $user()?.first_name }}&nbsp;{{ $user()?.last_name }}</h3>
   } @else {
     <h3>Create new user</h3>
   }
+
+<!--  /** second variant */-->
+<!--  @if (user$ | async; as user) {-->
+<!--    <h3>{{ user.first_name }}&nbsp;{{ user.last_name }}</h3>-->
+<!--  } @else {-->
+<!--    <h3>Create new user</h3>-->
+<!--  }-->
 
   <button class="top-row__close" routerLink="/">✕</button>
 </section>
