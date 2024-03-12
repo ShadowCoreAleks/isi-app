@@ -16,13 +16,17 @@
       grid-column: span 5;
       justify-items: flex-start;
       color: var(--text-primary);
+      transition: 500ms;
 
       &:has(td) {
         background: var(--table-cell) 0% 0% no-repeat padding-box;
         &:hover {
           background: var(--table-cell-hover) 0% 0% no-repeat padding-box;
-          transition: 500ms;
         }
+      }
+
+      &.active {
+        background: var(--table-cell-hover) 0% 0% no-repeat padding-box;
       }
     }
     th {

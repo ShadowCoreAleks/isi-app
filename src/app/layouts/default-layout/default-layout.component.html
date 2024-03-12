@@ -1,0 +1,11 @@
+<app-header></app-header>
+
+<div class="create-user-row">
+  <button app-button [routerLink]="['/', CREATE_USER_PARAM]">Create User</button>
+</div>
+
+<app-user-list></app-user-list>
+
+<section role="region" aria-label="User form">
+  <router-outlet></router-outlet>
+</section>

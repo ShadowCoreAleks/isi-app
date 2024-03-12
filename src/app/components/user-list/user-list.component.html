@@ -6,7 +6,7 @@
   </tr>
 
   @for (user of users$ | async; track user.username) {
-    <tr>
+    <tr [routerLink]="['/', user.username]" routerLinkActive="active" class="pointer">
       <td>{{ user.username }}</td>
       <td>{{ user.first_name }}</td>
       <td>{{ user.last_name }}</td>

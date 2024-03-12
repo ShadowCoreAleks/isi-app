@@ -1,0 +1,21 @@
+:host {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-column-gap: 26px;
+  grid-row-gap: 16px;
+  margin-inline: 46px;
+
+  app-header {
+    grid-column: span 2;
+  }
+
+  .create-user-row {
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: subgrid;
+
+    button {
+      justify-self: flex-end;
+    }
+  }
+}

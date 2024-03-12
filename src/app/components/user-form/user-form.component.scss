@@ -43,11 +43,19 @@
       box-sizing: border-box;
       padding: 17px 16px 16px 16px;
       background-color: var(--form-control);
-      border: unset;
+      border: 1px solid transparent;
       border-radius: var(--border-radius);
       font: var(--default-font);
       font-weight: 300;
       color: var(--text-primary);
+
+      &.ng-invalid.ng-dirty {
+        border-color: var(--error);
+      }
+    }
+    &_error {
+      font: var(--default-font);
+      color: var(--error);
     }
   }
 
