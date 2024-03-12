@@ -46,6 +46,7 @@ export class UserFormComponent implements OnInit {
   #backendApiService = inject(BackendApiService);
 
   protected readonly userTypeEnum = UserTypeEnum;
+  protected readonly pageModeEnum = PageModeEnum;
   protected form = new FormGroup({
     username: new FormControl<string>('', Validators.required),
     first_name: new FormControl<string>('', Validators.required),
@@ -71,5 +72,7 @@ export class UserFormComponent implements OnInit {
 
   fillForm(user: UserType) {
     if (!user) return;
+
+    this.form.reset(user);
   }
 }
