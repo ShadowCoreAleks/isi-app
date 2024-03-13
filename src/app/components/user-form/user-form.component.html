@@ -93,9 +93,9 @@
   @if ($pageMode() === pageModeEnum.update) {
     <div class="user-form__actions">
       <button
+        (click)="onDelete()"
         app-button
         color="accent"
-        (click)="onDelete()"
       >
         Delete
       </button>
@@ -103,7 +103,13 @@
       <button app-button>Save</button>
     </div>
   } @else {
-    <button app-button class="user-form__create">Create</button>
+    <button
+      (click)="onCreate()"
+      app-button
+      class="user-form__create"
+    >
+      Create
+    </button>
   }
 </form>
 

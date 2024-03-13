@@ -105,4 +105,17 @@ export class UserFormComponent {
     this.#backendApiService.deleteUser(this.username())
       .subscribe(() => this.#router.navigate(['/']));
   }
+
+  onCreate() {
+    const user: IUser = {
+      username: <string>this.form.value.username,
+      first_name: <string>this.form.value.first_name,
+      last_name: <string>this.form.value.last_name,
+      email: <string>this.form.value.email,
+      user_type: <UserTypeEnum>this.form.value.user_type,
+      password: <string>this.form.value.password,
+    };
+    this.#backendApiService.createUser(user)
+      .subscribe(() => this.#router.navigate(['/']));
+  }
 }

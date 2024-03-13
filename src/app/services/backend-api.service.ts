@@ -19,7 +19,7 @@ export class BackendApiService {
   }
 
   loadSpecificUser(username: string) {
-    const foundUser = USERS.find(u => u.username === username);
+    const foundUser = this.users.find(u => u.username === username);
     return of(foundUser || null);
   }
 
@@ -29,5 +29,12 @@ export class BackendApiService {
       .pipe(
         tap(users => this.#store.setUsers(users))
       );
+  }
+
+  createUser(user: IUser) {
+    this.users = this.users.concat(user);
+    return of(this.users).pipe(
+      tap(users => this.#store.setUsers(users))
+    )
   }
 }
