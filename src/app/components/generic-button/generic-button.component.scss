@@ -1,8 +1,14 @@
 :host {
+  // primary styles set by default
+
+  --_bg-color: var(--button);
+  --_bg-hover-color: #207CD7FF;
+  --_shadow-color: var(--primary-shadow);
+
   border: unset;
   border-radius: var(--border-radius);
-  box-shadow: 0 5px 8px var(--button-shadow);
-  background-color: var(--button);
+  box-shadow: 0 5px 8px var(--primary-shadow);
+  background-color: var(--_bg-color);
   font: normal normal normal 14px/17px Helvetica;
   color: white;
   height: 46px;
@@ -11,6 +17,12 @@
   transition-duration: 500ms;
 
   &:hover {
-    background-color: #207CD7FF;
+    background-color: var(--_bg-hover-color);
+  }
+
+  &.accent {
+    --_bg-color: var(--error);
+    --_bg-hover-color: #dc6789;
+    --_shadow-color: var(--accent-shadow);
   }
 }

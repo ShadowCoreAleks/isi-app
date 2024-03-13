@@ -13,6 +13,13 @@
 <!--    <h3>Create new user</h3>-->
 <!--  }-->
 
+  <!--  /** third variant */-->
+<!--  @if ($pageMode() === pageModeEnum.update && $user3()) {-->
+<!--    <h3>{{ $user3()?.first_name }}&nbsp;{{ $user3()?.last_name }}</h3>-->
+<!--  } @else {-->
+<!--    <h3>Create new user</h3>-->
+<!--  }-->
+
   <button class="top-row__close" routerLink="/">✕</button>
 </section>
 
@@ -83,7 +90,21 @@
     ></ng-container>
   </div>
 
-  <button app-button class="user-form__create">Create</button>
+  @if ($pageMode() === pageModeEnum.update) {
+    <div class="user-form__actions">
+      <button
+        app-button
+        color="accent"
+        (click)="onDelete()"
+      >
+        Delete
+      </button>
+
+      <button app-button>Save</button>
+    </div>
+  } @else {
+    <button app-button class="user-form__create">Create</button>
+  }
 </form>
 
 <ng-template #errors let-control>

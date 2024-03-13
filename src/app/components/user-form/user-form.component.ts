@@ -1,22 +1,22 @@
 import {
-  ChangeDetectionStrategy, ChangeDetectorRef,
+  ChangeDetectionStrategy,
   Component,
   computed,
   effect,
   inject,
   input,
-  OnInit,
   signal,
   Signal, WritableSignal
 } from '@angular/core';
 import { UserTypeEnum } from '../../models/user-type.enum';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { GenericButtonComponent } from '../generic-button/generic-button.component';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { BackendApiService } from '../../services/backend-api.service';
 import { filter, firstValueFrom, map, Observable, switchMap, tap } from 'rxjs';
 import { IUser } from '../../models/user.interface';
 import { AsyncPipe, NgTemplateOutlet } from '@angular/common';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 enum PageModeEnum {
   create = 'create',
@@ -40,14 +40,14 @@ type UserType = IUser | null;
   ],
   styleUrls: ['./user-form.component.scss']
 })
-export class UserFormComponent implements OnInit {
+export class UserFormComponent {
   username = input.required<string>();
   $pageMode: Signal<PageModeEnum> = computed(() => !!this.username() ? PageModeEnum.update : PageModeEnum.create);
   $user: WritableSignal<UserType> = signal(null);
   user$!: Observable<UserType>;
   #backendApiService = inject(BackendApiService);
   #activatedRoute = inject(ActivatedRoute);
-  #cdr = inject(ChangeDetectorRef);
+  #router = inject(Router);
 
   protected readonly userTypeEnum = UserTypeEnum;
   protected readonly pageModeEnum = PageModeEnum;
@@ -60,6 +60,17 @@ export class UserFormComponent implements OnInit {
     password: new FormControl<string>('', Validators.required),
     repeatPassword: new FormControl<string>('', Validators.required),
   });
+
+  /** third variant */
+  // $user3 = toSignal(this.#activatedRoute.paramMap.pipe(
+  //   map(params => params.get('username')),
+  //   filter(Boolean),
+  //   switchMap(username => this.#backendApiService.loadSpecificUser(username).pipe(
+  //     tap(user => {
+  //       this.fillForm(user);
+  //     })
+  //   ))
+  // ));
 
   constructor() {
     effect(async () => {
@@ -77,7 +88,6 @@ export class UserFormComponent implements OnInit {
         //   switchMap(username => this.#backendApiService.loadSpecificUser(username).pipe(
         //     tap(user => {
         //       this.fillForm(user);
-        //       this.#cdr.markForCheck();
         //     })
         //   ))
         // )
@@ -85,12 +95,14 @@ export class UserFormComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-  }
-
   fillForm(user: UserType) {
     if (!user) return;
 
     this.form.reset(user);
+  }
+
+  onDelete() {
+    this.#backendApiService.deleteUser(this.username())
+      .subscribe(() => this.#router.navigate(['/']));
   }
 }

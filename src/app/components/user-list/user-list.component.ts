@@ -1,5 +1,7 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, OnInit } from '@angular/core';
 import { BackendApiService } from '../../services/backend-api.service';
+import { StoreService } from '../../services/store.service';
+import { userListColumns } from './user-list.constants';
 
 @Component({
   selector: 'app-user-list',
@@ -7,16 +9,15 @@ import { BackendApiService } from '../../services/backend-api.service';
   styleUrls: ['./user-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UserListComponent {
+export class UserListComponent implements OnInit {
+  #store = inject(StoreService);
   #backendApiService = inject(BackendApiService);
 
-  users$ = this.#backendApiService.loadUsers();
+  $users = this.#store.$users;
 
-  columns: string[] = [
-    'Username',
-    'First name',
-    'Last name',
-    'Email',
-    'Type'
-  ];
+  protected readonly columns = userListColumns;
+
+  ngOnInit() {
+    this.#backendApiService.loadUsers().subscribe();
+  }
 }
