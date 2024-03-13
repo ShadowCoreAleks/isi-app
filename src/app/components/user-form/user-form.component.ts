@@ -9,7 +9,15 @@ import {
   Signal, WritableSignal
 } from '@angular/core';
 import { UserTypeEnum } from '../../models/user-type.enum';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  ValidationErrors, ValidatorFn,
+  Validators
+} from '@angular/forms';
 import { GenericButtonComponent } from '../generic-button/generic-button.component';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { BackendApiService } from '../../services/backend-api.service';
@@ -17,6 +25,7 @@ import { filter, firstValueFrom, map, Observable, switchMap, tap } from 'rxjs';
 import { IUser } from '../../models/user.interface';
 import { AsyncPipe, NgTemplateOutlet } from '@angular/common';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { GenericInputModule } from '../generic-input/generic-input.module';
 
 enum PageModeEnum {
   create = 'create',
@@ -36,7 +45,8 @@ type UserType = IUser | null;
     RouterLink,
     ReactiveFormsModule,
     NgTemplateOutlet,
-    AsyncPipe
+    AsyncPipe,
+    GenericInputModule
   ],
   styleUrls: ['./user-form.component.scss']
 })
@@ -57,8 +67,14 @@ export class UserFormComponent {
     last_name: new FormControl<string>('', Validators.required),
     email: new FormControl<string>('', [Validators.required, Validators.email]),
     user_type: new FormControl<UserTypeEnum | null>(null, Validators.required),
-    password: new FormControl<string>('', Validators.required),
-    repeatPassword: new FormControl<string>('', Validators.required),
+    passwords: new FormGroup({
+      password: new FormControl<string>('', [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.pattern(/[\w]+[\d]+/)
+      ]),
+      repeatPassword: new FormControl<string>('', Validators.required),
+    }, { validators: this.passShouldMatch('password', 'repeatPassword')})
   });
 
   /** third variant */
@@ -113,9 +129,16 @@ export class UserFormComponent {
       last_name: <string>this.form.value.last_name,
       email: <string>this.form.value.email,
       user_type: <UserTypeEnum>this.form.value.user_type,
-      password: <string>this.form.value.password,
     };
     this.#backendApiService.createUser(user)
       .subscribe(() => this.#router.navigate(['/']));
+  }
+
+  passShouldMatch(origin: string, repeat: string): ValidatorFn {
+    return (form: AbstractControl): ValidationErrors | null => {
+      const match = form?.get(origin).value === form?.get(repeat).value;
+
+      return match ? null : { passShouldMatch: true };
+    };
   }
 }

@@ -33,24 +33,28 @@
     label {
       color: var(--text-primary);
     }
+    label + app-generic-input,
     label + select,
     label + input {
       margin-block-start: 3px;
     }
-    select,
-    input {
-      width: 100%;
-      box-sizing: border-box;
-      padding: 17px 16px 16px 16px;
-      background-color: var(--form-control);
-      border: 1px solid transparent;
-      border-radius: var(--border-radius);
-      font: var(--default-font);
-      font-weight: 300;
-      color: var(--text-primary);
+    &:not(:has(app-generic-input)) {
+      select,
+      input {
+        width: 100%;
+        box-sizing: border-box;
+        padding-inline-start: 16px;
+        background-color: var(--form-control);
+        border: 1px solid transparent;
+        border-radius: var(--border-radius);
+        font: var(--default-font);
+        font-weight: 300;
+        color: var(--text-primary);
+        height: 46px;
 
-      &.ng-invalid.ng-dirty {
-        border-color: var(--error);
+        &.ng-invalid.ng-dirty {
+          border-color: var(--error);
+        }
       }
     }
     &_error {

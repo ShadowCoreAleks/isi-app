@@ -53,7 +53,11 @@
 
   <div class="user-form__control">
     <label for="email">Email*</label>
-    <input [formControl]="form.controls.email" id="email" type="email">
+    <app-generic-input>
+      <img src="assets/icons/alternate_email_black_24dp.svg" ngProjectAs="prefix">
+      <input [formControl]="form.controls.email" id="email" type="email">
+    </app-generic-input>
+
     <ng-container
       [ngTemplateOutlet]="errors"
       [ngTemplateOutletContext]="{ $implicit: form.controls.email }"
@@ -74,19 +78,23 @@
 
   <div class="user-form__control">
     <label for="password">Password*</label>
-    <input [formControl]="form.controls.password" id="password" type="password">
+    <input [formControl]="form.controls.passwords.controls.password" id="password" type="password">
     <ng-container
       [ngTemplateOutlet]="errors"
-      [ngTemplateOutletContext]="{ $implicit: form.controls.password }"
+      [ngTemplateOutletContext]="{ $implicit: form.controls.passwords.controls.password }"
     ></ng-container>
   </div>
 
   <div class="user-form__control">
     <label for="repeat-password">Repeat password*</label>
-    <input [formControl]="form.controls.repeatPassword" id="repeat-password" type="password">
+    <input [formControl]="form.controls.passwords.controls.repeatPassword" id="repeat-password" type="password">
     <ng-container
       [ngTemplateOutlet]="errors"
-      [ngTemplateOutletContext]="{ $implicit: form.controls.repeatPassword }"
+      [ngTemplateOutletContext]="{ $implicit: form.controls.passwords.controls.repeatPassword }"
+    ></ng-container>
+    <ng-container
+      [ngTemplateOutlet]="errors"
+      [ngTemplateOutletContext]="{ $implicit: form.controls.passwords }"
     ></ng-container>
   </div>
 
@@ -116,5 +124,21 @@
 <ng-template #errors let-control>
   @if (control.dirty && control.hasError('required')) {
     <div class="user-form__control_error">This field is required</div>
+  }
+
+  @if (control.dirty && control.hasError('email')) {
+    <div class="user-form__control_error">Wrong Email address</div>
+  }
+
+  @if (control.hasError('minlength')) {
+    <div class="user-form__control_error">Min length is {{ control.getError('minlength')?.['requiredLength'] }}</div>
+  }
+
+  @if (control.hasError('pattern')) {
+    <div class="user-form__control_error">Incorrect value</div>
+  }
+
+  @if (control.hasError('passShouldMatch')) {
+    <div class="user-form__control_error">Passwords Should Match</div>
   }
 </ng-template>
