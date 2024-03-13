@@ -1,4 +1,27 @@
 header {
   height: 56px;
   margin-block-start: 56px;
+  display: flex;
+  justify-content: space-between;
+
+  .notification {
+    width: 281px;
+    height: 56px;
+    padding-inline-start: 26px;
+    display: inline-flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: var(--white);
+
+    &-error {
+      background: var(--error) 0% 0% no-repeat padding-box;
+      box-shadow: 0 10px 15px #EF7DA05C;
+      border-radius: 6px;
+    }
+    &-success {
+      background: #66BB6A 0% 0% no-repeat padding-box;
+      box-shadow: 0 10px 15px #4CAF505C;
+      border-radius: 6px;
+    }
+  }
 }

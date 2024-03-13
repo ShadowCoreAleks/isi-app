@@ -1,4 +1,9 @@
 <header>
-  <div>Error message</div>
-  <div>Success message</div>
+  @if ($showError()) {
+    <div class="notification notification-error">Error message</div>
+  }
+
+  @if ($showSuccess()) {
+    <div class="notification notification-success">Success message</div>
+  }
 </header>

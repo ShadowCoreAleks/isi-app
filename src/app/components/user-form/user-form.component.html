@@ -141,4 +141,8 @@
   @if (control.hasError('passShouldMatch')) {
     <div class="user-form__control_error">Passwords Should Match</div>
   }
+
+  @if (control.hasError('isExist')) {
+    <div class="user-form__control_error">User with this name exists</div>
+  }
 </ng-template>

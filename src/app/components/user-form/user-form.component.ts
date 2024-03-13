@@ -26,6 +26,7 @@ import { IUser } from '../../models/user.interface';
 import { AsyncPipe, NgTemplateOutlet } from '@angular/common';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { GenericInputModule } from '../generic-input/generic-input.module';
+import { HeaderNotificationService } from '../../services/header-notification.service';
 
 enum PageModeEnum {
   create = 'create',
@@ -58,11 +59,12 @@ export class UserFormComponent {
   #backendApiService = inject(BackendApiService);
   #activatedRoute = inject(ActivatedRoute);
   #router = inject(Router);
+  #headerNotificationService = inject(HeaderNotificationService);
 
   protected readonly userTypeEnum = UserTypeEnum;
   protected readonly pageModeEnum = PageModeEnum;
   protected form = new FormGroup({
-    username: new FormControl<string>('', Validators.required),
+    username: new FormControl<string>('', Validators.required, this.checkUniqueUsername()),
     first_name: new FormControl<string>('', Validators.required),
     last_name: new FormControl<string>('', Validators.required),
     email: new FormControl<string>('', [Validators.required, Validators.email]),
@@ -91,6 +93,7 @@ export class UserFormComponent {
   constructor() {
     effect(async () => {
       if (this.username()) {
+        this.form.controls.username.clearAsyncValidators();
 
         /** first variant */
         const user = await firstValueFrom(this.#backendApiService.loadSpecificUser(this.username())) || null;
@@ -118,8 +121,15 @@ export class UserFormComponent {
   }
 
   onDelete() {
+    if (this.username() === 'johnweak') {
+      this.#headerNotificationService.showErrorNotification(true);
+      return;
+    }
     this.#backendApiService.deleteUser(this.username())
-      .subscribe(() => this.#router.navigate(['/']));
+      .subscribe(() => {
+        this.#headerNotificationService.showSuccessNotification(true);
+        this.#router.navigate(['/']);
+      });
   }
 
   onCreate() {
@@ -131,7 +141,10 @@ export class UserFormComponent {
       user_type: <UserTypeEnum>this.form.value.user_type,
     };
     this.#backendApiService.createUser(user)
-      .subscribe(() => this.#router.navigate(['/']));
+      .subscribe(() => {
+        this.#headerNotificationService.showSuccessNotification(true);
+        this.#router.navigate(['/']);
+      });
   }
 
   passShouldMatch(origin: string, repeat: string): ValidatorFn {
@@ -140,5 +153,13 @@ export class UserFormComponent {
 
       return match ? null : { passShouldMatch: true };
     };
+  }
+
+  checkUniqueUsername() {
+    return (control: AbstractControl): Observable<ValidationErrors | null> => {
+      return this.#backendApiService.checkUserExist(control.value).pipe(
+        map((result: boolean) => result ? { isExist: true } : null)
+      )
+    }
   }
 }

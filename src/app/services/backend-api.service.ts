@@ -37,4 +37,8 @@ export class BackendApiService {
       tap(users => this.#store.setUsers(users))
     )
   }
+
+  checkUserExist(username: string) {
+    return of(this.users.some(u => u.username === username)).pipe(delay(500));
+  }
 }
