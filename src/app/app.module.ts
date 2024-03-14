@@ -7,6 +7,8 @@ import { UserListComponent } from './components/user-list/user-list.component';
 import { HeaderComponent } from './components/header/header.component';
 import { GenericButtonComponent } from './components/generic-button/generic-button.component';
 import { DefaultLayoutComponent } from './layouts/default-layout/default-layout.component';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptors } from '@angular/common/http';
+import { catchErrorInterceptor } from './interceptors/catch-error.interceptor';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { DefaultLayoutComponent } from './layouts/default-layout/default-layout.
     AppRoutingModule,
     GenericButtonComponent,
   ],
-  providers: [],
+  providers: [
+    provideHttpClient(withInterceptors([catchErrorInterceptor]))
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

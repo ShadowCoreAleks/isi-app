@@ -5,6 +5,16 @@ import { CREATE_USER_PARAM } from './app.constants';
 
 const routes: Routes = [
   {
+    path: 'not-found',
+    pathMatch: 'full',
+    loadComponent: () => import('./pages/not-found/not-found.component').then(c => c.NotFoundComponent)
+  },
+  {
+    path: 'forbidden',
+    pathMatch: 'full',
+    loadComponent: () => import('./pages/forbidden/forbidden.component').then(c => c.ForbiddenComponent)
+  },
+  {
     path: '',
     component: DefaultLayoutComponent,
     children: [
