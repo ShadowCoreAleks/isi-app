@@ -113,6 +113,7 @@
   } @else {
     <button
       (click)="onCreate()"
+      [disabled]="form.invalid"
       app-button
       class="user-form__create"
     >
